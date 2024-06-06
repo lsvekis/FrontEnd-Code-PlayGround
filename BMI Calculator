@@ -1,0 +1,59 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>BMI Calculator</h1>
+        <form id="bmiForm">
+            <input type="number" id="weightInput" placeholder="Enter weight in kg" required>
+            <input type="number" id="heightInput" placeholder="Enter height in cm" required>
+            <button type="submit">Calculate</button>
+        </form>
+        <p id="bmiDisplay">Your BMI: </p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.calculator-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+input, button {
+    padding: 10px;
+    font-size: 16px;
+}
+p {
+    font-size: 18px;
+    margin: 0;
+}
+JavaScript:
+document.getElementById('bmiForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const weight = parseFloat(document.getElementById('weightInput').value);
+    const height = parseFloat(document.getElementById('heightInput').value) / 100;
+    const bmi = (weight / (height * height)).toFixed(2);
+    document.getElementById('bmiDisplay').textContent = `Your BMI: ${bmi}`;
+});
