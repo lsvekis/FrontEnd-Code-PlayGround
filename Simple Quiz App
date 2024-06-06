@@ -1,0 +1,76 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz App</h1>
+        <form id="quizForm">
+            <div class="question">
+                <p>What is the capital of France?</p>
+                <label><input type="radio" name="q1" value="a"> Paris</label><br>
+                <label><input type="radio" name="q1" value="b"> Berlin</label><br>
+                <label><input type="radio" name="q1" value="c"> Madrid</label>
+            </div>
+            <div class="question">
+                <p>What is 2 + 2?</p>
+                <label><input type="radio" name="q2" value="a"> 3</label><br>
+                <label><input type="radio" name="q2" value="b"> 4</label><br>
+                <label><input type="radio" name="q2" value="c"> 5</label>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <p id="resultDisplay"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.quiz-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+.question {
+    margin-bottom: 20px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+#resultDisplay {
+    margin-top: 20px;
+    font-size: 18px;
+}
+JavaScript:
+document.getElementById('quizForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    let score = 0;
+    const q1 = document.querySelector('input[name="q1"]:checked');
+    if (q1 && q1.value === 'a') {
+        score++;
+    }
+    const q2 = document.querySelector('input[name="q2"]:checked');
+    if (q2 && q2.value === 'b') {
+        score++;
+    }
+    const resultDisplay = document.getElementById('resultDisplay');
+    resultDisplay.textContent = `You scored ${score} out of 2.`;
+});
