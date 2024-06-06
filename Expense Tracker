@@ -1,0 +1,105 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="tracker-container">
+        <h1>Expense Tracker</h1>
+        <form id="expenseForm">
+            <input type="text" id="descriptionInput" placeholder="Enter description" required>
+            <input type="number" id="amountInput" placeholder="Enter amount" required>
+            <button type="submit">Add Expense</button>
+        </form>
+        <ul id="expenseList"></ul>
+        <p id="totalAmount">Total: $0.00</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.tracker-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+input, button {
+    padding: 10px;
+    font-size: 16px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+button.remove {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 16px;
+}
+p {
+    font-size: 18px;
+    margin-top: 20px;
+}
+JavaScript:
+document.getElementById('expenseForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const descriptionInput = document.getElementById('descriptionInput');
+    const amountInput = document.getElementById('amountInput');
+    const description = descriptionInput.value;
+    const amount = parseFloat(amountInput.value);
+    if (description === '' || isNaN(amount)) return;
+    const li = document.createElement('li');
+    li.textContent = `${description}: $${amount.toFixed(2)}`;
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.classList.add('remove');
+    removeButton.addEventListener('click', function() {
+        li.remove();
+        updateTotal();
+    });
+    li.appendChild(removeButton);
+    document.getElementById('expenseList').appendChild(li);
+    updateTotal();
+    descriptionInput.value = '';
+    amountInput.value = '';
+});
+function updateTotal() {
+    const amounts = document.querySelectorAll('#expenseList li');
+    let total = 0;
+    amounts.forEach(li => {
+        const amount = parseFloat(li.textContent.split('$')[1]);
+        total += amount;
+    });
+    document.getElementById('totalAmount').textContent = `Total: $${total.toFixed(2)}`;
+}
