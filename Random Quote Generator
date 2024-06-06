@@ -1,0 +1,51 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="quote-box">
+        <p id="quoteDisplay">Click the button to see a random quote.</p>
+        <button id="newQuoteButton">New Quote</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.quote-box {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+JavaScript:
+const quotes = [
+    "The best way to predict the future is to invent it.",
+    "Life is 10% what happens to us and 90% how we react to it.",
+    "The only limit to our realization of tomorrow is our doubts of today.",
+    "Do not watch the clock. Do what it does. Keep going.",
+    "Keep your face always toward the sunshine—and shadows will fall behind you."
+];
+document.getElementById('newQuoteButton').addEventListener('click', function() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    document.getElementById('quoteDisplay').textContent = quotes[randomIndex];
+});
