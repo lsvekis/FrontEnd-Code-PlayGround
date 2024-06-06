@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Carousel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="carousel">
+        <button id="prevButton">&lt;</button>
+        <img id="carouselImage" src="image1.jpg" alt="Image Carousel">
+        <button id="nextButton">&gt;</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.carousel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+JavaScript:
+const images = ['image1.jpg', 'image2.jpg', 'image3.jpg'];
+let currentIndex = 0;
+document.getElementById('prevButton').addEventListener('click', function() {
+    currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+    document.getElementById('carouselImage').src = images[currentIndex];
+});
+document.getElementById('nextButton').addEventListener('click', function() {
+    currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+    document.getElementById('carouselImage').src = images[currentIndex];
+});
