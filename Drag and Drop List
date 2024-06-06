@@ -1,0 +1,71 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <ul id="draggableList">
+        <li draggable="true">Item 1</li>
+        <li draggable="true">Item 2</li>
+        <li draggable="true">Item 3</li>
+        <li draggable="true">Item 4</li>
+        <li draggable="true">Item 5</li>
+    </ul>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+    width: 200px;
+}
+li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: move;
+}
+JavaScript:
+const list = document.getElementById('draggableList');
+let draggedItem = null;
+list.addEventListener('dragstart', function(event) {
+    draggedItem = event.target;
+    event.target.style.opacity = 0.5;
+});
+list.addEventListener('dragend', function(event) {
+    event.target.style.opacity = '';
+});
+list.addEventListener('dragover', function(event) {
+    event.preventDefault();
+});
+list.addEventListener('dragenter', function(event) {
+    if (event.target.tagName === 'LI') {
+        event.target.style.borderTop = '2px solid #000';
+    }
+});
+list.addEventListener('dragleave', function(event) {
+    if (event.target.tagName === 'LI') {
+        event.target.style.borderTop = '';
+    }
+});
+list.addEventListener('drop', function(event) {
+    event.preventDefault();
+    if (event.target.tagName === 'LI') {
+        event.target.style.borderTop = '';
+        list.insertBefore(draggedItem, event.target);
+    }
+});
