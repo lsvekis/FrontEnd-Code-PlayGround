@@ -1,0 +1,66 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive FAQ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="faq-container">
+        <div class="faq-item">
+            <div class="faq-question">What is your return policy?</div>
+            <div class="faq-answer">Our return policy is 30 days with a receipt.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Do you offer international shipping?</div>
+            <div class="faq-answer">Yes, we offer shipping to over 50 countries.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">How can I track my order?</div>
+            <div class="faq-answer">You can track your order using the tracking number provided in the confirmation email.</div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.faq-container {
+    width: 80%;
+    max-width: 600px;
+}
+.faq-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.faq-question {
+    padding: 10px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+.faq-answer {
+    display: none;
+    padding: 10px;
+    background-color: #fff;
+}
+JavaScript:
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', function() {
+        const answer = this.nextElementSibling;
+        if (answer.style.display === 'block') {
+            answer.style.display = 'none';
+        } else {
+            answer.style.display = 'block';
+        }
+    });
+});
