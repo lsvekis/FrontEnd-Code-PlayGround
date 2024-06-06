@@ -1,0 +1,80 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Story</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="story-container">
+        <h1>Interactive Story</h1>
+        <p id="storyText">You are in a forest. You see two paths. Which one do you take?</p>
+        <button id="option1">Take the left path</button>
+        <button id="option2">Take the right path</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.story-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+JavaScript:
+const storyText = document.getElementById('storyText');
+const option1 = document.getElementById('option1');
+const option2 = document.getElementById('option2');
+option1.addEventListener('click', () => {
+    storyText.textContent = 'You took the left path and found a treasure chest. Do you open it or leave it?';
+    option1.textContent = 'Open the chest';
+    option2.textContent = 'Leave it';
+    option1.removeEventListener('click', arguments.callee);
+    option2.removeEventListener('click', arguments.callee);
+    option1.addEventListener('click', () => {
+        storyText.textContent = 'You opened the chest and found gold coins! You win!';
+        option1.style.display = 'none';
+        option2.style.display = 'none';
+    });
+    option2.addEventListener('click', () => {
+        storyText.textContent = 'You left the chest and continued on your journey. You win!';
+        option1.style.display = 'none';
+        option2.style.display = 'none';
+    });
+});
+option2.addEventListener('click', () => {
+    storyText.textContent = 'You took the right path and encountered a bear. Do you fight it or run away?';
+    option1.textContent = 'Fight the bear';
+    option2.textContent = 'Run away';
+    option1.removeEventListener('click', arguments.callee);
+    option2.removeEventListener('click', arguments.callee);
+    option1.addEventListener('click', () => {
+        storyText.textContent = 'You fought the bear and won! You win!';
+        option1.style.display = 'none';
+        option2.style.display = 'none';
+    });
+    option2.addEventListener('click', () => {
+        storyText.textContent = 'You ran away and escaped safely. You win!';
+        option1.style.display = 'none';
+        option2.style.display = 'none';
+    });
+});
