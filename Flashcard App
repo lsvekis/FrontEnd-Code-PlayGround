@@ -1,0 +1,81 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="flashcard-container">
+        <h1>Flashcard App</h1>
+        <div id="flashcard" class="flashcard">
+            <p id="flashcardContent">Click to reveal the answer</p>
+        </div>
+        <button id="nextButton">Next</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.flashcard-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.flashcard {
+    width: 300px;
+    height: 200px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+JavaScript:
+const flashcards = [
+    { question: 'What is the capital of France?', answer: 'Paris' },
+    { question: 'What is 2 + 2?', answer: '4' },
+    { question: 'What is the capital of Spain?', answer: 'Madrid' }
+];
+let currentFlashcardIndex = 0;
+const flashcardContent = document.getElementById('flashcardContent');
+const flashcard = document.getElementById('flashcard');
+function showFlashcard(index) {
+    flashcardContent.textContent = flashcards[index].question;
+    flashcard.dataset.flipped = 'false';
+}
+flashcard.addEventListener('click', () => {
+    if (flashcard.dataset.flipped === 'false') {
+        flashcardContent.textContent = flashcards[currentFlashcardIndex].answer;
+        flashcard.dataset.flipped = 'true';
+    } else {
+        flashcardContent.textContent = flashcards[currentFlashcardIndex].question;
+        flashcard.dataset.flipped = 'false';
+    }
+});
+document.getElementById('nextButton').addEventListener('click', () => {
+    currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcards.length;
+    showFlashcard(currentFlashcardIndex);
+});
+showFlashcard(currentFlashcardIndex);
