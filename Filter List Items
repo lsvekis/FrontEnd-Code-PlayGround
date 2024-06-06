@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter List Items</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <input type="text" id="filterInput" placeholder="Filter items...">
+    <ul id="itemList">
+        <li>Apple</li>
+        <li>Banana</li>
+        <li>Cherry</li>
+        <li>Date</li>
+        <li>Fig</li>
+        <li>Grape</li>
+    </ul>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    margin: 0;
+}
+input {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    font-size: 18px;
+    margin: 5px 0;
+}
+JavaScript:
+document.getElementById('filterInput').addEventListener('input', function() {
+    const filter = this.value.toLowerCase();
+    const items = document.querySelectorAll('#itemList li');
+    items.forEach(item => {
+        if (item.textContent.toLowerCase().includes(filter)) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+});
