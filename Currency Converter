@@ -1,0 +1,65 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="converter">
+        <h1>Currency Converter</h1>
+        <form id="converterForm">
+            <input type="number" id="amountInput" placeholder="Enter amount" required>
+            <select id="currencySelect">
+                <option value="EUR">USD to EUR</option>
+                <option value="GBP">USD to GBP</option>
+                <option value="JPY">USD to JPY</option>
+            </select>
+            <button type="submit">Convert</button>
+        </form>
+        <p id="resultDisplay"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.converter {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+input, select, button {
+    padding: 10px;
+    font-size: 16px;
+}
+JavaScript:
+const exchangeRates = {
+    EUR: 0.85,
+    GBP: 0.75,
+    JPY: 110.00
+};
+document.getElementById('converterForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const amount = parseFloat(document.getElementById('amountInput').value);
+    const currency = document.getElementById('currencySelect').value;
+    const rate = exchangeRates[currency];
+    const convertedAmount = (amount * rate).toFixed(2);
+    document.getElementById('resultDisplay').textContent = `Converted Amount: ${convertedAmount} ${currency}`;
+});
