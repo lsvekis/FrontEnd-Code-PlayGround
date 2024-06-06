@@ -1,0 +1,83 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="converter-container">
+        <h1>Unit Converter</h1>
+        <form id="converterForm">
+            <input type="number" id="inputValue" placeholder="Enter value" required>
+            <select id="unitFrom">
+                <option value="meters">Meters</option>
+                <option value="kilometers">Kilometers</option>
+                <option value="grams">Grams</option>
+                <option value="kilograms">Kilograms</option>
+            </select>
+            <select id="unitTo">
+                <option value="meters">Meters</option>
+                <option value="kilometers">Kilometers</option>
+                <option value="grams">Grams</option>
+                <option value="kilograms">Kilograms</option>
+            </select>
+            <button type="submit">Convert</button>
+        </form>
+        <p id="resultDisplay">Converted Value: </p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.converter-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+input, select, button {
+    padding: 10px;
+    font-size: 16px;
+}
+p {
+    font-size: 18px;
+    margin-top: 20px;
+}
+JavaScript:
+document.getElementById('converterForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const inputValue = parseFloat(document.getElementById('inputValue').value);
+    const unitFrom = document.getElementById('unitFrom').value;
+    const unitTo = document.getElementById('unitTo').value;
+    let convertedValue;
+    if (unitFrom === unitTo) {
+        convertedValue = inputValue;
+    } else {
+        const conversionRates = {
+            meters: { kilometers: 0.001, grams: null, kilograms: null },
+            kilometers: { meters: 1000, grams: null, kilograms: null },
+            grams: { kilograms: 0.001, meters: null, kilometers: null },
+            kilograms: { grams: 1000, meters: null, kilometers: null }
+        };
+        convertedValue = inputValue * (conversionRates[unitFrom][unitTo] || 1);
+    }
+    document.getElementById('resultDisplay').textContent = `Converted Value: ${convertedValue}`;
+});
