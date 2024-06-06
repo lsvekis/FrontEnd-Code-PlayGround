@@ -1,0 +1,68 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="todo-container">
+        <h1>To-Do List</h1>
+        <form id="todoForm">
+            <input type="text" id="taskInput" placeholder="Enter a new task">
+            <button type="submit">Add Task</button>
+        </form>
+        <ul id="taskList"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.todo-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+li.completed {
+    text-decoration: line-through;
+    color: grey;
+}
+JavaScript:
+document.getElementById('todoForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const taskInput = document.getElementById('taskInput');
+    const taskText = taskInput.value;
+    if (taskText === '') return;
+    const li = document.createElement('li');
+    li.textContent = taskText;
+    li.addEventListener('click', function() {
+        li.classList.toggle('completed');
+    });
+    document.getElementById('taskList').appendChild(li);
+    taskInput.value = '';
+});
