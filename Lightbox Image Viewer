@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lightbox Image Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="gallery">
+        <img src="thumb1.jpg" alt="Thumbnail 1" class="thumbnail">
+        <img src="thumb2.jpg" alt="Thumbnail 2" class="thumbnail">
+        <img src="thumb3.jpg" alt="Thumbnail 3" class="thumbnail">
+    </div>
+    <div id="lightbox" class="lightbox">
+        <span id="closeButton" class="close">&times;</span>
+        <img id="lightboxImage" src="" alt="Large View">
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+.gallery {
+    display: flex;
+    gap: 10px;
+}
+.thumbnail {
+    width: 100px;
+    cursor: pointer;
+}
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.lightbox.active {
+    display: flex;
+}
+.lightbox img {
+    max-width: 80%;
+    max-height: 80%;
+}
+.close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+JavaScript:
+document.querySelectorAll('.thumbnail').forEach(thumbnail => {
+    thumbnail.addEventListener('click', function() {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        lightboxImage.src = this.src.replace('thumb', 'large');
+        lightbox.classList.add('active');
+    });
+});
+document.getElementById('closeButton').addEventListener('click', function() {
+    document.getElementById('lightbox').classList.remove('active');
+});
+document.getElementById('lightbox').addEventListener('click', function(event) {
+    if (event.target === this) {
+        this.classList.remove('active');
+    }
+});
+Tooltip Hover Effect
+Description:
+In this exercise, students will create tooltips that appear when hovering over specific text elements. This exercise introduces mouse events and creating dynamic elements.
+Topics Covered:
+HTML structure
+CSS styling
+JavaScript event listeners
+DOM manipulation (creating and positioning elements)
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip Hover Effect</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <p>Hover over the <span class="tooltip" data-tooltip="This is a tooltip!">highlighted text</span> to see the tooltip.</p>
+    <p>Hover over this <span class="tooltip" data-tooltip="Another tooltip!">other text</span> to see another tooltip.</p>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    margin: 50px;
+}
+.tooltip {
+    position: relative;
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+JavaScript:
+document.querySelectorAll('.tooltip').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+        const tooltipText = document.createElement('div');
+        tooltipText.className = 'tooltiptext';
+        tooltipText.innerHTML = this.getAttribute('data-tooltip');
+        this.appendChild(tooltipText);
+    });
+    item.addEventListener('mouseleave', function() {
+        const tooltipText = this.querySelector('.tooltiptext');
+        if (tooltipText) {
+            tooltipText.remove();
+        }
+    });
+});
