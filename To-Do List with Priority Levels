@@ -1,0 +1,106 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List with Priority Levels</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="todo-container">
+        <h1>To-Do List</h1>
+        <form id="todoForm">
+            <input type="text" id="taskInput" placeholder="Enter a new task" required>
+            <select id="priorityInput">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
+        <ul id="taskList"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.todo-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+input, select, button {
+    padding: 10px;
+    font-size: 16px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+button.remove {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 16px;
+}
+JavaScript:
+document.getElementById('todoForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const taskInput = document.getElementById('taskInput');
+    const priorityInput = document.getElementById('priorityInput');
+    const taskText = taskInput.value;
+    const priority = priorityInput.value;
+    if (taskText === '') return;
+    addTaskToDOM(taskText, priority);
+    sortTasks();
+    taskInput.value = '';
+});
+function addTaskToDOM(taskText, priority) {
+    const li = document.createElement('li');
+    li.textContent = `${taskText} (${priority})`;
+    li.setAttribute('data-priority', priority);
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.classList.add('remove');
+    removeButton.addEventListener('click', function() {
+        li.remove();
+    });
+    li.appendChild(removeButton);
+    document.getElementById('taskList').appendChild(li);
+}
+function sortTasks() {
+    const taskList = document.getElementById('taskList');
+    const tasks = Array.from(taskList.children);
+    tasks.sort((a, b) => {
+        const priorities = { 'High': 3, 'Medium': 2, 'Low': 1 };
+        return priorities[b.getAttribute('data-priority')] - priorities[a.getAttribute('data-priority')];
+    });
+    tasks.forEach(task => taskList.appendChild(task));
+}
