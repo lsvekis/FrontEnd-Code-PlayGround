@@ -1,0 +1,43 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="slider">
+        <img id="sliderImage" src="image1.jpg" alt="Image Slider">
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.slider {
+    width: 80%;
+    max-width: 600px;
+    overflow: hidden;
+    position: relative;
+}
+.slider img {
+    width: 100%;
+    display: block;
+}
+JavaScript:
+const images = ['image1.jpg', 'image2.jpg', 'image3.jpg'];
+let currentIndex = 0;
+function showNextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    document.getElementById('sliderImage').src = images[currentIndex];
+}
+setInterval(showNextImage, 3000); // Change image every 3 seconds
