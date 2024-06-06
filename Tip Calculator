@@ -1,0 +1,62 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Tip Calculator</h1>
+        <form id="calculatorForm">
+            <input type="number" id="billAmount" placeholder="Enter bill amount" required>
+            <input type="number" id="tipPercentage" placeholder="Enter tip percentage" required>
+            <button type="submit">Calculate</button>
+        </form>
+        <p id="tipAmountDisplay">Tip Amount: $0.00</p>
+        <p id="totalAmountDisplay">Total Amount: $0.00</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.calculator-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+input, button {
+    padding: 10px;
+    font-size: 16px;
+}
+p {
+    font-size: 18px;
+    margin: 0;
+}
+JavaScript:
+document.getElementById('calculatorForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const billAmount = parseFloat(document.getElementById('billAmount').value);
+    const tipPercentage = parseFloat(document.getElementById('tipPercentage').value);
+    const tipAmount = (billAmount * (tipPercentage / 100)).toFixed(2);
+    const totalAmount = (billAmount + parseFloat(tipAmount)).toFixed(2);
+    document.getElementById('tipAmountDisplay').textContent = `Tip Amount: $${tipAmount}`;
+    document.getElementById('totalAmountDisplay').textContent = `Total Amount: $${totalAmount}`;
+});
