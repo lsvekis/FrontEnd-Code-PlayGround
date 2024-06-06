@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Items to List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <input type="text" id="itemInput" placeholder="Enter item">
+    <button id="addItemButton">Add Item</button>
+    <ul id="itemList"></ul>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    margin: 0;
+}
+input {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    font-size: 18px;
+    margin: 5px 0;
+}
+JavaScript:
+document.getElementById('addItemButton').addEventListener('click', function() {
+    const itemInput = document.getElementById('itemInput');
+    const newItemText = itemInput.value;
+    if (newItemText !== '') {
+        const newItem = document.createElement('li');
+        newItem.textContent = newItemText;
+        document.getElementById('itemList').appendChild(newItem);
+        itemInput.value = '';
+    }
+});
