@@ -1,0 +1,65 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="accordion">
+        <div class="accordion-item">
+            <div class="accordion-header">Section 1</div>
+            <div class="accordion-content">Content for section 1.</div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">Section 2</div>
+            <div class="accordion-content">Content for section 2.</div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">Section 3</div>
+            <div class="accordion-content">Content for section 3.</div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.accordion {
+    width: 300px;
+}
+.accordion-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.accordion-header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.accordion-content {
+    display: none;
+    padding: 10px;
+}
+JavaScript:
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', function() {
+        const content = this.nextElementSibling;
+        if (content.style.display === 'block') {
+            content.style.display = 'none';
+        } else {
+            content.style.display = 'block';
+        }
+    });
+});
