@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highlight List Items</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <ul id="itemList">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+    </ul>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    margin: 0;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    font-size: 18px;
+    margin: 5px 0;
+    padding: 10px;
+    cursor: pointer;
+}
+li.highlight {
+    background-color: yellow;
+}
+JavaScript:
+document.getElementById('itemList').addEventListener('click', function(event) {
+    if (event.target.tagName === 'LI') {
+        const items = document.querySelectorAll('li');
+        items.forEach(item => item.classList.remove('highlight'));
+        event.target.classList.add('highlight');
+    }
+});
