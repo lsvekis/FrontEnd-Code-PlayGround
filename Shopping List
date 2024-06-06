@@ -1,0 +1,76 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="shopping-container">
+        <h1>Shopping List</h1>
+        <form id="shoppingForm">
+            <input type="text" id="itemInput" placeholder="Enter item" required>
+            <button type="submit">Add Item</button>
+        </form>
+        <ul id="shoppingList"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.shopping-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+button.remove {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 16px;
+}
+JavaScript:
+document.getElementById('shoppingForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const itemInput = document.getElementById('itemInput');
+    const itemText = itemInput.value;
+    if (itemText === '') return;
+    const li = document.createElement('li');
+    li.textContent = itemText;
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.classList.add('remove');
+    removeButton.addEventListener('click', function() {
+        li.remove();
+    });
+    li.appendChild(removeButton);
+    document.getElementById('shoppingList').appendChild(li);
+    itemInput.value = '';
+});
