@@ -1,0 +1,56 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collapsible Sections</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="collapsible">
+        <div class="collapsible-header">Section 1</div>
+        <div class="collapsible-content">Content for section 1.</div>
+    </div>
+    <div class="collapsible">
+        <div class="collapsible-header">Section 2</div>
+        <div class="collapsible-content">Content for section 2.</div>
+    </div>
+    <div class="collapsible">
+        <div class="collapsible-header">Section 3</div>
+        <div class="collapsible-content">Content for section 3.</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.collapsible {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.collapsible-header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.collapsible-content {
+    display: none;
+    padding: 10px;
+}
+JavaScript:
+document.querySelectorAll('.collapsible-header').forEach(header => {
+    header.addEventListener('click', function() {
+        const content = this.nextElementSibling;
+        if (content.style.display === 'block') {
+            content.style.display = 'none';
+        } else {
+            content.style.display = 'block';
+        }
+    });
+});
