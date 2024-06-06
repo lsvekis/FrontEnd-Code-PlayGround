@@ -1,0 +1,106 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Interactive Quiz</h1>
+        <div id="quiz"></div>
+        <button id="nextButton">Next</button>
+        <p id="scoreDisplay"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.quiz-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+#quiz {
+    margin-bottom: 20px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+p {
+    font-size: 18px;
+}
+JavaScript:
+const quizData = [
+    {
+        question: 'What is the capital of France?',
+        choices: ['Berlin', 'Madrid', 'Paris', 'Rome'],
+        correct: 'Paris'
+    },
+    {
+        question: 'What is 2 + 2?',
+        choices: ['3', '4', '5', '6'],
+        correct: '4'
+    },
+    {
+        question: 'Who wrote "To Kill a Mockingbird"?',
+        choices: ['Harper Lee', 'Mark Twain', 'J.K. Rowling', 'Jane Austen'],
+        correct: 'Harper Lee'
+    }
+];
+let currentQuestionIndex = 0;
+let score = 0;
+const quizElement = document.getElementById('quiz');
+const nextButton = document.getElementById('nextButton');
+const scoreDisplay = document.getElementById('scoreDisplay');
+function loadQuestion() {
+    const currentQuestion = quizData[currentQuestionIndex];
+    quizElement.innerHTML = `
+        <p>${currentQuestion.question}</p>
+        ${currentQuestion.choices.map((choice, index) => `
+            <label>
+                <input type="radio" name="choice" value="${choice}">
+                ${choice}
+            </label>
+            <br>
+        `).join('')}
+    `;
+}
+function showScore() {
+    quizElement.style.display = 'none';
+    nextButton.style.display = 'none';
+    scoreDisplay.textContent = `Your score: ${score} / ${quizData.length}`;
+}
+nextButton.addEventListener('click', () => {
+    const selectedChoice = document.querySelector('input[name="choice"]:checked');
+    if (selectedChoice) {
+        const answer = selectedChoice.value;
+        if (answer === quizData[currentQuestionIndex].correct) {
+            score++;
+        }
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            loadQuestion();
+        } else {
+            showScore();
+        }
+    } else {
+        alert('Please select an answer');
+    }
+});
+loadQuestion();
