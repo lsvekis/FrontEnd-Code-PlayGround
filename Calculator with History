@@ -1,0 +1,144 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator with History</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Calculator</h1>
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+            <button class="number">7</button>
+            <button class="number">8</button>
+            <button class="number">9</button>
+            <button class="operator">/</button>
+            <button class="number">4</button>
+            <button class="number">5</button>
+            <button class="number">6</button>
+            <button class="operator">*</button>
+            <button class="number">1</button>
+            <button class="number">2</button>
+            <button class="number">3</button>
+            <button class="operator">-</button>
+            <button class="number">0</button>
+            <button id="clear">C</button>
+            <button id="equals">=</button>
+            <button class="operator">+</button>
+        </div>
+        <h2>History</h2>
+        <ul id="history"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.calculator-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+input {
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    text-align: right;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 50px);
+    gap: 10px;
+}
+button {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    cursor: pointer;
+}
+h2 {
+    margin-top: 20px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    margin: 5px 0;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+JavaScript:
+let display = document.getElementById('display');
+let buttons = Array.from(document.getElementsByClassName('number'));
+let operators = Array.from(document.getElementsByClassName('operator'));
+let clear = document.getElementById('clear');
+let equals = document.getElementById('equals');
+let currentOperator = null;
+let firstOperand = null;
+let secondOperand = null;
+let history = document.getElementById('history');
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        display.value += this.textContent;
+    });
+});
+operators.forEach(operator => {
+    operator.addEventListener('click', function() {
+        if (display.value) {
+            firstOperand = parseFloat(display.value);
+            currentOperator = this.textContent;
+            display.value = '';
+        }
+    });
+});
+clear.addEventListener('click', function() {
+    display.value = '';
+    firstOperand = null;
+    secondOperand = null;
+    currentOperator = null;
+});
+equals.addEventListener('click', function() {
+    if (display.value) {
+        secondOperand = parseFloat(display.value);
+        let result;
+        switch (currentOperator) {
+            case '+':
+                result = firstOperand + secondOperand;
+                break;
+            case '-':
+                result = firstOperand - secondOperand;
+                break;
+            case '*':
+                result = firstOperand * secondOperand;
+                break;
+            case '/':
+                result = firstOperand / secondOperand;
+                break;
+        }
+        display.value = result;
+        let historyItem = document.createElement('li');
+        historyItem.textContent = `${firstOperand} ${currentOperator} ${secondOperand} = ${result}`;
+        history.appendChild(historyItem);
+        firstOperand = null;
+        secondOperand = null;
+        currentOperator = null;
+    }
+});
