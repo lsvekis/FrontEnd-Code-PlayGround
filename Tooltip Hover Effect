@@ -1,0 +1,61 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip Hover Effect</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <p>Hover over the <span class="tooltip" data-tooltip="This is a tooltip!">highlighted text</span> to see the tooltip.</p>
+    <p>Hover over this <span class="tooltip" data-tooltip="Another tooltip!">other text</span> to see another tooltip.</p>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    margin: 50px;
+}
+.tooltip {
+    position: relative;
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+JavaScript:
+document.querySelectorAll('.tooltip').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+        const tooltipText = document.createElement('div');
+        tooltipText.className = 'tooltiptext';
+        tooltipText.innerHTML = this.getAttribute('data-tooltip');
+        this.appendChild(tooltipText);
+    });
+    item.addEventListener('mouseleave', function() {
+        const tooltipText = this.querySelector('.tooltiptext');
+        if (tooltipText) {
+            tooltipText.remove();
+        }
+    });
+});
