@@ -1,0 +1,123 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+            <button class="number">7</button>
+            <button class="number">8</button>
+            <button class="number">9</button>
+            <button class="operator">/</button>
+            <button class="number">4</button>
+            <button class="number">5</button>
+            <button class="number">6</button>
+            <button class="operator">*</button>
+            <button class="number">1</button>
+            <button class="number">2</button>
+            <button class="number">3</button>
+            <button class="operator">-</button>
+            <button class="number">0</button>
+            <button id="clear">C</button>
+            <button id="equals">=</button>
+            <button class="operator">+</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.calculator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+#display {
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    text-align: right;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 50px);
+    gap: 10px;
+}
+button {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    cursor: pointer;
+}
+JavaScript:
+let display = document.getElementById('display');
+let buttons = Array.from(document.getElementsByClassName('number'));
+let operators = Array.from(document.getElementsByClassName('operator'));
+let clear = document.getElementById('clear');
+let equals = document.getElementById('equals');
+let currentOperator = null;
+let firstOperand = null;
+let secondOperand = null;
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        display.value += this.textContent;
+    });
+});
+operators.forEach(operator => {
+    operator.addEventListener('click', function() {
+        if (display.value) {
+            firstOperand = parseFloat(display.value);
+            currentOperator = this.textContent;
+            display.value = '';
+        }
+    });
+});
+clear.addEventListener('click', function() {
+    display.value = '';
+    firstOperand = null;
+    secondOperand = null;
+    currentOperator = null;
+});
+equals.addEventListener('click', function() {
+    if (display.value) {
+        secondOperand = parseFloat(display.value);
+        switch (currentOperator) {
+            case '+':
+                display.value = firstOperand + secondOperand;
+                break;
+            case '-':
+                display.value = firstOperand - secondOperand;
+                break;
+            case '*':
+                display.value = firstOperand * secondOperand;
+                break;
+            case '/':
+                display.value = firstOperand / secondOperand;
+                break;
+        }
+        firstOperand = null;
+        secondOperand = null;
+        currentOperator = null;
+    }
+});
