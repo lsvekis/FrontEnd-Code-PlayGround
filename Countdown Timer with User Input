@@ -1,0 +1,77 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer with User Input</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="timer-container">
+        <h1>Countdown Timer</h1>
+        <form id="timerForm">
+            <input type="number" id="secondsInput" placeholder="Enter seconds" required>
+            <button type="submit">Start Timer</button>
+        </form>
+        <p id="timerDisplay">0:00</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.timer-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+input, button {
+    padding: 10px;
+    font-size: 16px;
+}
+p {
+    font-size: 36px;
+    margin-top: 20px;
+}
+JavaScript:
+let timer;
+let timeLeft;
+document.getElementById('timerForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    clearInterval(timer);
+    timeLeft = parseInt(document.getElementById('secondsInput').value);
+    startTimer();
+});
+function startTimer() {
+    timer = setInterval(function() {
+        if (timeLeft > 0) {
+            timeLeft--;
+            updateDisplay();
+        } else {
+            clearInterval(timer);
+            alert('Time is up!');
+        }
+    }, 1000);
+}
+function updateDisplay() {
+    const minutes = Math.floor(timeLeft / 60).toString().padStart(1, '0');
+    const seconds = (timeLeft % 60).toString().padStart(2, '0');
+    document.getElementById('timerDisplay').textContent = `${minutes}:${seconds}`;
+}
+updateDisplay();
