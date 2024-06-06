@@ -1,0 +1,60 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="rng-container">
+        <h1>Random Number Generator</h1>
+        <form id="rngForm">
+            <input type="number" id="minValue" placeholder="Min value" required>
+            <input type="number" id="maxValue" placeholder="Max value" required>
+            <button type="submit">Generate</button>
+        </form>
+        <p id="randomNumberDisplay"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.rng-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+input, button {
+    padding: 10px;
+    font-size: 16px;
+}
+p {
+    font-size: 24px;
+    margin-top: 20px;
+}
+JavaScript:
+document.getElementById('rngForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const minValue = parseInt(document.getElementById('minValue').value);
+    const maxValue = parseInt(document.getElementById('maxValue').value);
+    const randomNumber = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+    document.getElementById('randomNumberDisplay').textContent = `Random Number: ${randomNumber}`;
+});
