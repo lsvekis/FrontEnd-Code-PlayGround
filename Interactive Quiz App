@@ -1,0 +1,113 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz App</h1>
+        <div id="quiz"></div>
+        <button id="submit">Submit</button>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.quiz-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+JavaScript:
+const quizContainer = document.getElementById('quiz');
+const resultsContainer = document.getElementById('results');
+const submitButton = document.getElementById('submit');
+const myQuestions = [
+    {
+        question: "What is the capital of France?",
+        answers: {
+            a: "Berlin",
+            b: "Madrid",
+            c: "Paris"
+        },
+        correctAnswer: "c"
+    },
+    {
+        question: "Who is the CEO of Tesla?",
+        answers: {
+            a: "Jeff Bezos",
+            b: "Elon Musk",
+            c: "Bill Gates"
+        },
+        correctAnswer: "b"
+    },
+    {
+        question: "What is the smallest planet in our solar system?",
+        answers: {
+            a: "Mars",
+            b: "Venus",
+            c: "Mercury"
+        },
+        correctAnswer: "c"
+    }
+];
+function buildQuiz() {
+    const output = [];
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+        const answers = [];
+        for (letter in currentQuestion.answers) {
+            answers.push(
+                `<label>
+                    <input type="radio" name="question${questionNumber}" value="${letter}">
+                    ${letter} :
+                    ${currentQuestion.answers[letter]}
+                </label>`
+            );
+        }
+        output.push(
+            `<div class="question"> ${currentQuestion.question} </div>
+            <div class="answers"> ${answers.join('')} </div>`
+        );
+    });
+    quizContainer.innerHTML = output.join('');
+}
+function showResults() {
+    const answerContainers = quizContainer.querySelectorAll('.answers');
+    let numCorrect = 0;
+    myQuestions.forEach((currentQuestion, questionNumber) => {
+        const answerContainer = answerContainers[questionNumber];
+        const selector = `input[name=question${questionNumber}]:checked`;
+        const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+        if (userAnswer === currentQuestion.correctAnswer) {
+            numCorrect++;
+            answerContainers[questionNumber].style.color = 'green';
+        } else {
+            answerContainers[questionNumber].style.color = 'red';
+        }
+    });
+    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+}
+buildQuiz();
+submitButton.addEventListener('click', showResults);
