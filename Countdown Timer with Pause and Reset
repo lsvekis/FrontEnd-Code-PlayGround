@@ -1,0 +1,91 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="timer-container">
+        <h1>Countdown Timer</h1>
+        <input type="number" id="timeInput" placeholder="Enter seconds" required>
+        <div class="buttons">
+            <button id="startButton">Start</button>
+            <button id="pauseButton">Pause</button>
+            <button id="resetButton">Reset</button>
+        </div>
+        <p id="timerDisplay">0</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.timer-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+input {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+p {
+    font-size: 24px;
+    margin: 0;
+}
+JavaScript:
+let timer;
+let countdown;
+let isPaused = false;
+document.getElementById('startButton').addEventListener('click', function() {
+    if (!isPaused) {
+        clearInterval(timer);
+        const timeInput = parseInt(document.getElementById('timeInput').value, 10);
+        countdown = timeInput;
+    }
+    isPaused = false;
+    document.getElementById('timerDisplay').textContent = countdown;
+    timer = setInterval(function() {
+        if (!isPaused) {
+            countdown--;
+            document.getElementById('timerDisplay').textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(timer);
+                alert('Time is up!');
+            }
+        }
+    }, 1000);
+});
+document.getElementById('pauseButton').addEventListener('click', function() {
+    isPaused = true;
+});
+document.getElementById('resetButton').addEventListener('click', function() {
+    clearInterval(timer);
+    countdown = 0;
+    document.getElementById('timerDisplay').textContent = countdown;
+    isPaused = false;
+});
