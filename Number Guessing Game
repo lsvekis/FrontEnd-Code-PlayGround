@@ -1,0 +1,68 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Number Guessing Game</h1>
+        <form id="guessForm">
+            <input type="number" id="guessInput" placeholder="Enter your guess" required>
+            <button type="submit">Submit Guess</button>
+        </form>
+        <p id="resultDisplay">Guess a number between 1 and 100!</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.game-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+input, button {
+    padding: 10px;
+    font-size: 16px;
+}
+p {
+    font-size: 18px;
+    margin-top: 20px;
+}
+JavaScript:
+const randomNumber = Math.floor(Math.random() * 100) + 1;
+let attempts = 0;
+document.getElementById('guessForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const guess = parseInt(document.getElementById('guessInput').value);
+    attempts++;
+    let result = '';
+    if (guess === randomNumber) {
+        result = `Correct! The number was ${randomNumber}. It took you ${attempts} attempts.`;
+    } else if (guess > randomNumber) {
+        result = 'Too high! Try again.';
+    } else {
+        result = 'Too low! Try again.';
+    }
+    document.getElementById('resultDisplay').textContent = result;
+});
