@@ -1,0 +1,83 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="pomodoro-container">
+        <h1>Pomodoro Timer</h1>
+        <p id="timerDisplay">25:00</p>
+        <div class="buttons">
+            <button id="startButton">Start</button>
+            <button id="resetButton">Reset</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.pomodoro-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#timerDisplay {
+    font-size: 48px;
+    margin: 20px 0;
+}
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+JavaScript:
+let timer;
+let timeLeft = 1500; // 25 minutes
+let isRunning = false;
+function updateDisplay() {
+    const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+    const seconds = (timeLeft % 60).toString().padStart(2, '0');
+    document.getElementById('timerDisplay').textContent = `${minutes}:${seconds}`;
+}
+function startTimer() {
+    if (!isRunning) {
+        timer = setInterval(function() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                updateDisplay();
+            } else {
+                clearInterval(timer);
+                alert('Time is up!');
+            }
+        }, 1000);
+        isRunning = true;
+    }
+}
+function resetTimer() {
+    clearInterval(timer);
+    timeLeft = 1500; // Reset to 25 minutes
+    updateDisplay();
+    isRunning = false;
+}
+document.getElementById('startButton').addEventListener('click', startTimer);
+document.getElementById('resetButton').addEventListener('click', resetTimer);
+updateDisplay();
