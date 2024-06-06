@@ -1,0 +1,53 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Counter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="counter">
+        <button id="decrementButton">-</button>
+        <span id="count">0</span>
+        <button id="incrementButton">+</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    margin: 0;
+}
+#counter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+span {
+    font-size: 24px;
+    width: 50px;
+    text-align: center;
+}
+JavaScript:
+let count = 0;
+document.getElementById('incrementButton').addEventListener('click', function() {
+    count++;
+    document.getElementById('count').textContent = count;
+});
+document.getElementById('decrementButton').addEventListener('click', function() {
+    count--;
+    document.getElementById('count').textContent = count;
+});
