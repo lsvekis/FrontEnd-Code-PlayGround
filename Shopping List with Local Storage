@@ -1,0 +1,102 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List with Local Storage</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="list-container">
+        <h1>Shopping List</h1>
+        <form id="shoppingForm">
+            <input type="text" id="itemInput" placeholder="Enter a new item" required>
+            <button type="submit">Add Item</button>
+        </form>
+        <ul id="itemList"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+CSS:
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.list-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+input, button {
+    padding: 10px;
+    font-size: 16px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+button.remove {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 16px;
+}
+JavaScript:
+document.addEventListener('DOMContentLoaded', function() {
+    const itemList = document.getElementById('itemList');
+    const items = JSON.parse(localStorage.getItem('items')) || [];
+    items.forEach(item => {
+        addItemToDOM(item);
+    });
+    document.getElementById('shoppingForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const itemInput = document.getElementById('itemInput');
+        const itemText = itemInput.value;
+        if (itemText === '') return;
+        addItemToDOM(itemText);
+        items.push(itemText);
+        localStorage.setItem('items', JSON.stringify(items));
+        itemInput.value = '';
+    });
+    function addItemToDOM(itemText) {
+        const li = document.createElement('li');
+        li.textContent = itemText;
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.classList.add('remove');
+        removeButton.addEventListener('click', function() {
+            li.remove();
+            const index = items.indexOf(itemText);
+            if (index !== -1) {
+                items.splice(index, 1);
+                localStorage.setItem('items', JSON.stringify(items));
+            }
+        });
+        li.appendChild(removeButton);
+        itemList.appendChild(li);
+    }
+});
